@@ -1,23 +1,10 @@
 from tkinter import *
 import collections, random, time, sys
 from math import sqrt
-
-#=========== Collection Wrapper: Queue ====================
-class Queue: # A wrapper made around the collections library
-    def __init__(self):
-        self.elements = collections.deque()
-
-    def empty(self):
-        return len(self.elements) == 0
-    
-    def put(self,x):
-        self.elements.append(x)
-
-    def get(self):
-        return self.elements.popleft()
-
-    def reverse(self):
-        return self.elements.reverse()
+from Queues import *
+from Worlds import *
+from Treasures import *
+from Landmarks import *
 
 #================= Search Algorithm ======================
 
@@ -50,101 +37,8 @@ def reconstruct_path(came_from, start, goal):
         path.put(current)
     return path
 
-#=================== The World Generation =====================
-    
-class squaregrid:
-    def __init__ (self, width, height):
-        self.canvas = canvasMain
-        self.width = width
-        self.height = height
-        self.walls = []
-        self.wallimage = PhotoImage(file = 'Graphics\Wall.gif')
-        self.trees = []
-        self.treeimage = PhotoImage(file = 'Graphics\Tree.gif')
-        self.grass = []
-        self.grassimage = PhotoImage(file = 'Graphics\Grass.gif')
-        self.water = []
-        self.LargeProjectBanner = PhotoImage(file = 'Graphics\LargeBanner.gif')
-        self.SmallProjectBanner = PhotoImage(file = 'Graphics\SmallBanner.gif')
-
-    def drawgrid(self):
-        for y in range(self.height+1):
-            for x in range(self.width+1):
-                TType = self.draw_tile((x,y))
-                self.drawtile((x,y),TType)
-
-    def drawtile(self,gridid,TType):
-        x,y = gridid
-        x = x*10
-        y = y*10
-
-        if TType == 'Tree Tile': self.canvas.create_image(x,y,anchor="nw",image=self.treeimage)
-        if TType == 'Wall Tile': self.canvas.create_image(x,y,anchor="nw",image=self.wallimage)
-        if TType == 'Grass Tile': self.canvas.create_rectangle(x,y,x+10,y+10,outline = 'lime green',fill= 'forest green')
-        if TType == 'Water Tile': self.canvas.create_rectangle(x,y,x+10,y+10,outline = 'sky blue',fill= 'light sea green')
-
-    def draw_tile(self,gridid):
-
-        r = ''
-    
-        if gridid in self.walls: r = 'Wall Tile'
-        if gridid in self.trees: r = 'Tree Tile'
-        if gridid in self.grass: r = 'Grass Tile'
-        if gridid in self.water: r = 'Water Tile'
-    
-        return r
-
-    def neighbors(self,gridid):
-        (x,y) = gridid
-        results = [(x+1, y), (x, y-1), (x-1, y), (x, y+1)]
-        if (x + y) % 2 == 0: results.reverse() # aesthetics
-        results = filter(self.passable,results)
-        results = filter(self.in_bounds,results)
-        return results
-
-    def passable(self, gridid):
-       return gridid not in self.walls and gridid not in self.trees and gridid not in self.water 
-
-    def in_bounds(self, gridid):
-        (x, y) = gridid
-        return 0 <= x < self.width and 0 <= y < self.height
-
             
-# ================== Landmark and Treasures ========================
 
-class Landmark():
-    def __init__(self,ID,x,y):
-        self.ID = ID
-        self.x = x
-        self.y = y
-        x,y = self.x,self.y
-        x=x*10
-        y=y*10
-        self.location = (self.x,self.y)
-        self.found = False
-        self.square = canvasMain.create_rectangle(x,y,x+10,y+10,fill = "Gold",outline = 'White')
-        self.Treasure = ''
-        
-    def GetDistance(self,r1,r2):
-        distance = sqrt(((r1-self.x)**2) + ((r2-self.y)**2))
-        return distance
-
-class Treasure():
-    def __init__(self,name,desc):
-        self.name = name
-        self.desc = desc
-        self.used = False
-        self.Found = False
-
-    def Reveal(self,colour):
-
-        AF = 1
-        
-        for x in range (0,len(TreasureList)):
-           if TreasureList[x].Found == True:
-               AF +=1
-        
-        canvasTreasures.create_text(20,20*AF,anchor=W,text = self.name, fill = colour)
 
     
 #================== Robots ================================
@@ -286,7 +180,7 @@ canvasMain = Canvas(window, width=Width, height=Height, bg='white')
 canvasTreasures = Canvas(window, width=200, height=Height+100, bg='White')
 canvasRobotInfo = Canvas(window, width=Width, height=100, bg='White')
 
-World = squaregrid(GWidth,GHeight) #sg
+World = squaregrid(canvasMain,GWidth,GHeight) #sg
 
 canvasMain.grid(row = 0,column = 0)
 canvasTreasures.grid(row = 0,column =1,rowspan=2)
@@ -347,7 +241,7 @@ Treasures = [['Master Sword', 'The Master Sword is a fucking cool Sword'],
 
 for x in range (0,14): #Creating all the Landmarks
     x1,y1 = randomvalidcoord()
-    LandmarkList.append(Landmark(x,x1,y1))
+    LandmarkList.append(Landmark(x,x1,y1,canvasMain))
 
 TrA = len(Treasures)
 
