@@ -1,4 +1,5 @@
 from Queues import *
+from Functions import *
 #================== Robots ================================
 class Robot:
     def __init__(self,canvas,RobotID, x, y,LandmarkList,TreasureList,World,size =10, speed =1.0, colour='blue'):
@@ -92,7 +93,7 @@ class Robot:
         
         for c in range (0,len(self.LandmarkList)):
             if (x1,y1) == self.LandmarkList[c].location:
-                self.canvas.delete(self.LandmarkList[c].square)
+                self.canvas.itemconfig(self.LandmarkList[c].square,outline = 'White')
                 if  self.LandmarkList[c].found == False:
                     self.LandmarkList[c].found = True
                     self.Score += 100
@@ -112,7 +113,7 @@ class Robot:
                 closest = c
 
         if shortestdistance == 999:
-            x,y = randomvalidcoord()
+            x,y = randomvalidcoord(self.World)
             self.ObjectiveLocation = (x,y)
         else:
             x,y = self.LandmarkList[closest].location

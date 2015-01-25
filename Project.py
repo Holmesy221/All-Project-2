@@ -1,12 +1,19 @@
 from ProgramSetup import *
 
+
+class TrafficLight():
+    def __init__(self,Location):
+        self.Location = Location
+
+
+
+
         
-#===================================================================
+#========================= Initialisation ============================
 
 (RobotList,canvasMain,
 canvasRobotInfo,RobotCordLabels,
-RobotScoreLables,RobotObjectiveLines) = Initialise(0)
-
+RobotScoreLables,RobotObjectiveLines) = Initialise(2)
 
 #============================== Main =================================
 
@@ -25,7 +32,3 @@ while Running == True:
     canvasMain.update()
     time.sleep(0.01)
 window.mainloop()
-
-
-
-

@@ -17,6 +17,8 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
                  
     window = Tk()
 
+    window.title("Virtual Robot: Treasure Hunt")
+
     canvasMain = Canvas(window, width=Width, height=Height, bg='white')
     canvasTreasures = Canvas(window, width=200, height=Height+100, bg='White')
     canvasRobotInfo = Canvas(window, width=Width, height=100, bg='White')
@@ -26,14 +28,6 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
     canvasMain.grid(row = 0,column = 0)
     canvasTreasures.grid(row = 0,column =1,rowspan=2)
     canvasRobotInfo.grid(row = 1,column = 0)
-
-    canvasTreasures.create_rectangle(2,8,200,Height+100)
-    canvasRobotInfo.create_rectangle(10,2,Width,98)
-    canvasRobotInfo.create_text(100,25,anchor=E,text = 'Name:')
-    canvasRobotInfo.create_text(160,25,anchor=W,text = 'Red Bot',fill = 'Red')
-    canvasRobotInfo.create_text(270,25,anchor=W,text = 'Blue Bot',fill = 'Blue')
-    canvasRobotInfo.create_text(100,45,anchor=E,text = 'Location:')
-    canvasRobotInfo.create_text(100,65,anchor=E,text = 'Score:')
 
     if choice < 2:
         canvasRobotInfo.create_image(Width -1,3,anchor = NE,image=World.LargeProjectBanner)
@@ -46,6 +40,14 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
     RobotScoreLables = []
     RobotScoreLables.append(canvasRobotInfo.create_text(160,65,anchor=W,text =''))
     RobotScoreLables.append(canvasRobotInfo.create_text(270,65,anchor=W,text =''))
+
+    canvasTreasures.create_rectangle(2,8,200,Height+100)
+    canvasRobotInfo.create_rectangle(10,2,Width,98)
+    canvasRobotInfo.create_text(100,25,anchor=E,text = 'Name:')
+    canvasRobotInfo.create_text(160,25,anchor=W,text = 'Red Bot',fill = 'Red')
+    canvasRobotInfo.create_text(270,25,anchor=W,text = 'Blue Bot',fill = 'Blue')
+    canvasRobotInfo.create_text(100,45,anchor=E,text = 'Location:')
+    canvasRobotInfo.create_text(100,65,anchor=E,text = 'Score:')
 
 
     x = 0
@@ -80,7 +82,7 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
                  ['FREE BEER','Its Beer. And its Free!']]
 
 
-    for x in range (0,14): #Creating all the Landmarks
+    for x in range (0,6): #Creating all the Landmarks
         x1,y1 = randomvalidcoord(World)
         LandmarkList.append(Landmark(x,x1,y1,canvasMain))
 
