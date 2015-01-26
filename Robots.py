@@ -100,6 +100,7 @@ class Robot:
                     if self.LandmarkList[c].Treasure == '':
                         continue
                     else:
+                        self.canvas.itemconfig(self.LandmarkList[c].square,fill = self.colour)
                         self.TreasureList[self.LandmarkList[c].Treasure].Reveal(self.colour)
                         self.TreasureList[self.LandmarkList[c].Treasure].Found = True
                         self.Score += 50

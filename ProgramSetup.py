@@ -8,6 +8,9 @@ from Landmarks import *
 from Robots import *
 from Functions import *
 from ProgramSetup import *
+from TrafficLights import *
+
+
 
 def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
     
@@ -71,6 +74,7 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
     RobotObjectiveLines.append(canvasMain.create_line(0,0,0,0,fill = 'Red'))
     RobotObjectiveLines.append(canvasMain.create_line(0,0,0,0,fill = 'Blue'))
 
+    TrafficLightList = []
     RobotList = []
     LandmarkList = []
     TreasureList = []
@@ -79,10 +83,21 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
                  ['Really cool thing', 'This thing is really cool'],
                  ['Another really cool thing','This thing is also really cool'],
                  ['Reeces seal of approval','You lucky person'],
-                 ['FREE BEER','Its Beer. And its Free!']]
+                 ['FREE BEER','Its Beer. And its Free!'],
+                 ['1','1'],
+                 ['2','2'],
+                 ['3','3'],
+                 ['4','4'],
+                 ['5','5']]
+    
+    for x in range (0,10):#Creating all the Traffic Lights
+        x1,y1 = randomvalidcoord(World)
+        x1=x1*10
+        y1=y1*10
+        TrafficLightList.append(TrafficLight(canvasMain,(x1,y1)))
+        World.TrafficLights.append((x1,y1))
 
-
-    for x in range (0,6): #Creating all the Landmarks
+    for x in range (0,24): #Creating all the Landmarks
         x1,y1 = randomvalidcoord(World)
         LandmarkList.append(Landmark(x,x1,y1,canvasMain))
 
@@ -115,4 +130,4 @@ def Initialise(Size, AOR = 2, AOL = 14, AOT = 4):
         if x % 2 == 0: Colour = 'Red'
         RobotList.append(Robot(canvasMain,x,x1,y1,LandmarkList,TreasureList,World,speed = 1,size= 10,colour = Colour))
 
-    return RobotList,canvasMain,canvasRobotInfo,RobotCordLabels,RobotScoreLables,RobotObjectiveLines
+    return World,RobotList,canvasMain,canvasRobotInfo,RobotCordLabels,RobotScoreLables,RobotObjectiveLines,TrafficLightList

@@ -12,6 +12,9 @@ class squaregrid:
         self.grass = []
         self.grassimage = PhotoImage(file = 'Graphics\Grass.gif')
         self.water = []
+        self.TrafficLights = []
+       
+        
         self.LargeProjectBanner = PhotoImage(file = 'Graphics\LargeBanner.gif')
         self.SmallProjectBanner = PhotoImage(file = 'Graphics\SmallBanner.gif')
 
@@ -51,7 +54,7 @@ class squaregrid:
         return results
 
     def passable(self, gridid):
-       return gridid not in self.walls and gridid not in self.trees and gridid not in self.water 
+       return gridid not in self.walls and gridid not in self.trees and gridid not in self.water and gridid not in self.TrafficLights
 
     def in_bounds(self, gridid):
         (x, y) = gridid

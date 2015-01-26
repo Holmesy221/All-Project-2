@@ -4,11 +4,12 @@ import random
 def randomvalidcoord(World): #Finds a random coordinate which can be used(not a wall)
     x1 = random.randint(1,200)
     y1 = random.randint(1,200)
-
-    if (x1,y1) in World.grass:
-        return (x1,y1) 
-    else:
+        
+    if (x1,y1) not in World.grass or (x1,y1) in World.TrafficLights:
         return randomvalidcoord(World)
+    else:
+        return (x1,y1)
+        
 
 Map = ['Maps\MAP1 - Large.txt','Maps\MAP1 - Medium.txt','Maps\MAP1 - Small.txt']
 ProjectBanner = ['Graphics\LargeBanner.gif','Graphics\LargeBanner.gif','Graphics\SmallBanner.gif']
